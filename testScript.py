@@ -26,4 +26,4 @@ class NewBranchScript(Script):
 
 def run(self, data, commit):
     self.log_success(f"Test Successful")
-    self.log_success(f"{data['site_name']}")
+    # self.log_success(f"{data['site_name']}")
