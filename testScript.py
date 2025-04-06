@@ -27,3 +27,7 @@ class NewBranchScript(Script):
     def run(self, data, commit):
         self.log_success(f"Test Successful")
         self.log_success(f"{data['site_name']}")
+        self.log_success(f"{data['device_role']}")
+        self.log_success(f"{data['device_platform']}")
+        self.log_success(f"{data}")
+        self.log_success(f"{dir(data['site_name'])}")
