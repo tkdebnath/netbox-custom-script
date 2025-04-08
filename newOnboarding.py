@@ -44,3 +44,5 @@ class NewOnboardScript(Script):
                     
                     if not result.get('hostname', None):
                         self.log_failure(f"Failed onboarding {result['ip']}")
+        else:
+            self.log_failure(f"Missing environment value")  
