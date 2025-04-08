@@ -36,13 +36,10 @@ class NewOnboardScript(Script):
             return
         ip_list = data['device_ip'].split('\r\n')
         self.log_info(f"Onboard process initiated for {len(ip_list)} devices")
+        self.log_info(f"{len(ip_list)}")
         
-        # call for onboard function
+        #call for onboard function
         results = new_onboard(ip_list=ip_list)
-        if results:
-            for result in results:
-                if result.get('hostname', None):
-                    self.log_success(f"Successfully onboarded {result['ip']}, {result['hostname']}")
-                
-                if not result.get('hostname', None):
-                    self.log_failure(f"Failed onboarding {result['ip']}")
+        for result in results:
+            if result.get('hostname', None):
+                self.log_info(f"{result}")
