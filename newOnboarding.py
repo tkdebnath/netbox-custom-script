@@ -41,5 +41,4 @@ class NewOnboardScript(Script):
         #call for onboard function
         results = new_onboard(ip_list=ip_list)
         for result in results:
-            if result.get('hostname', None):
-                self.log_info(f"{result}")
+            self.log_info(f"{result}")
