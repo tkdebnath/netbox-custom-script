@@ -1,6 +1,8 @@
 from extras.scripts import *
 from django.utils.text import slugify
 from dcim.models import DeviceRole, Site, Platform
+import os
+from cisco_netbox_onboarding import new_onboard
 
 class NewOnboardScript(Script):
 
@@ -29,13 +31,16 @@ class NewOnboardScript(Script):
     )
 
     def run(self, data, commit):
-        self.log_success(f"Test Successful")
-        self.log_success(f"{data['site_name']}")
-        self.log_success(f"{data['device_role']}")
-        self.log_success(f"{data['device_platform']}")
-        self.log_success(f"{data}")
-        self.log_success(f"{dir(data['site_name'])}")
-        self.log_success(f"{data['device_ip']}")
-
-        device_ip_type = type(data['device_ip'])
-        self.log_success(f"type is :{device_ip_type}")
+        if os.getenv("NETMIKO_USERNAME") and os.getenv("NETMIKO_PASSWORD") and os.getenv("URL") and os.getenv("API_KEY"):
+            ip_list = data['device_ip'].split('\r\n')
+            self.log_info(f"Onboard process initiated for {len(ip_list)} devices")
+            
+            # call for onboard function
+            results = new_onboard(ip_list=ip_list)
+            if results:
+                for result in results:
+                    if result.get('hostname', None):
+                        self.log_success(f"Successfully onboarded {result['ip']}, {result['hostname']}")
+                    
+                    if not result.get('hostname', None):
+                        self.log_failure(f"Failed onboarding {result['ip']}")
