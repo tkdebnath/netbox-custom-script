@@ -2,7 +2,7 @@ from extras.scripts import *
 from django.utils.text import slugify
 from dcim.models import DeviceRole, Site, Platform
 import os
-# from cisco_netbox_onboarding import new_onboard
+from cisco_netbox_onboarding import new_onboard
 
 class NewOnboardScript(Script):
 
