@@ -31,18 +31,18 @@ class NewOnboardScript(Script):
     )
 
     def run(self, data, commit):
-        if os.getenv("NETMIKO_USERNAME") and os.getenv("NETMIKO_PASSWORD") and os.getenv("URL") and os.getenv("API_KEY"):
-            ip_list = data['device_ip'].split('\r\n')
-            self.log_info(f"Onboard process initiated for {len(ip_list)} devices")
-            
-            # call for onboard function
-            results = new_onboard(ip_list=ip_list)
-            if results:
-                for result in results:
-                    if result.get('hostname', None):
-                        self.log_success(f"Successfully onboarded {result['ip']}, {result['hostname']}")
-                    
-                    if not result.get('hostname', None):
-                        self.log_failure(f"Failed onboarding {result['ip']}")
-        else:
-            self.log_failure(f"Missing environment value")  
+        if not os.getenv("NETMIKO_USERNAME") or not os.getenv("NETMIKO_PASSWORD") or not os.getenv("URL") or not os.getenv("API_KEY"):
+            self.log_failure(f"Missing environment value")
+            return
+        ip_list = data['device_ip'].split('\r\n')
+        self.log_info(f"Onboard process initiated for {len(ip_list)} devices")
+        
+        # call for onboard function
+        results = new_onboard(ip_list=ip_list)
+        if results:
+            for result in results:
+                if result.get('hostname', None):
+                    self.log_success(f"Successfully onboarded {result['ip']}, {result['hostname']}")
+                
+                if not result.get('hostname', None):
+                    self.log_failure(f"Failed onboarding {result['ip']}")
