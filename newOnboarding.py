@@ -36,4 +36,6 @@ class NewOnboardScript(Script):
         self.log_success(f"{data}")
         self.log_success(f"{dir(data['site_name'])}")
         self.log_success(f"{data['device_ip']}")
-        self.log_success(f"{type(data['device_ip'])}")
+
+        device_ip_type = type(data['device_ip'])
+        self.log_success(f"type is :{device_ip_type}")
