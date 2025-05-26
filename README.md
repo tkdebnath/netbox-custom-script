@@ -1,2 +1,2 @@
 # netbox-custom-script
-Custom Script for netbox
+Custom Script for netbox.
