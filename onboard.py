@@ -31,9 +31,9 @@ class NewOnboardScript(Script):
 
     def run(self, data, commit):
 
-        if not verify_env():
-            self.log_failure(f"Missing environment value")
-            return
+        # if not verify_env():
+        #     self.log_failure(f"Missing environment value")
+        #     return
         
         device_list = data['device_ip'].split('\r\n')
         self.log_info(f"Onboard process initiated for {len(device_list)} devices")
