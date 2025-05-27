@@ -39,7 +39,8 @@ class NewOnboardScript(Script):
         self.log_info(f"Onboard process initiated for {len(device_list)} devices")
         self.log_info(f"{len(device_list)}")
 
-        self.log_info(f"{data}")
+        self.log_info(f"{data['site_name']}")
+        self.log_info(f"{type(data['site_name'])}")
         
 
 def verify_env():
