@@ -55,10 +55,10 @@ class NewOnboardScript(Script):
 
         for batch in result:
             self.log_debug(f"Batch: {batch}")
-            NewOnboardScript.new_onboard(ip_list=batch, threads=batch_size)
+            self.new_onboard(ip_list=batch, threads=batch_size)
             sleep(10)
 
-    def new_onboard(ip_list: list, threads: int=10):
+    def new_onboard(self, ip_list: list, threads: int=10):
         
         if not os.getenv("NETMIKO_USERNAME"):
             raise BaseException('username is missing')
@@ -68,12 +68,12 @@ class NewOnboardScript(Script):
             pass
     
         threads = ThreadPool(threads)
-        results = threads.map(NewOnboardScript.check_host, ip_list)
+        results = threads.map(self.check_host, ip_list)
         threads.close()
         threads.join()
         
     
-    def check_host(ip):
+    def check_host(self, ip):
 
         host = {
             'host': ip,
