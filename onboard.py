@@ -125,7 +125,40 @@ class NewOnboardScript(Script):
 
             obj_onboard = Onboarding(hostname=hostname, site=site, version=show_version, interfaces=show_interface, inventory=show_inventory)
             obj_onboard.cdp_neighbors_detail = show_cdp
-            obj_onboard.automatic()
+            # obj_onboard.automatic()
+            # Collecting data
+            """ tacacs ip can be defined """
+            obj_onboard.identify_device()
+            self.log_info(f"{hostname}: Identifying Device")
+
+            obj_onboard.identify_ip_prefix()
+            self.log_info(f"{hostname}: Identifying IP Prefixes")
+
+            obj_onboard.identify_interfaces()
+            self.log_info(f"{hostname}: Identifying Interfaces")
+
+            obj_onboard.identify_inventory()
+            self.log_info(f"{hostname}: Identifying Inventory")
+
+            obj_onboard.identify_tacacs_ip()
+            self.log_info(f"{hostname}: Identifying Tacacs source")
+
+            obj_onboard.identify_adjacency()
+            self.log_info(f"{hostname}: Identifying Adjacency")
+
+            # execution
+            obj_onboard.execute_task1()
+            obj_onboard.execute_task1_1()
+            obj_onboard.execute_task2()
+            obj_onboard.execute_task3()
+            obj_onboard.execute_task4()
+            obj_onboard.execute_task5()
+            obj_onboard.execute_task6()
+
+
+
+
+
             net_connect.disconnect()
             self.log_info(f"{hostname}: onboarding/update process complete")
             
